@@ -1,14 +1,13 @@
 FROM node:20-slim
 
-# Instala o OpenClaw globalmente
-RUN npm install -g openclaw --unsafe-perm=true
-
-# Define o diretório de trabalho apenas por organização
+# Definimos o diretório de trabalho
 WORKDIR /app
 
-# Define a porta que o Render exige
+# Instalamos localmente para evitar problemas de PATH global
+RUN npm install openclaw
+
+# A porta que o Render exige
 ENV PORT=10000
 
-# O segredo: usamos o 'sh -c' para que o sistema procure o 'openclaw' no PATH do NPM
-# sem precisarmos digitar o caminho completo.
-CMD ["sh", "-c", "openclaw gateway --auth token --port 10000 --bind lan"]
+# Usamos npx para garantir que ele localize o binário dentro de node_modules
+CMD ["npx", "openclaw", "gateway", "--auth", "token", "--port", "10000", "--bind", "lan"]

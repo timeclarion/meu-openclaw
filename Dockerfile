@@ -14,4 +14,4 @@ ENV PORT=10000
 
 # Comando de inicialização
 # O OpenClaw lerá ANTHROPIC_API_KEY e OPENCLAW_GATEWAY_TOKEN das variáveis de ambiente do Render
-CMD ["openclaw", "gateway", "--auth", "token", "--port", "10000", "--bind", "lan"]
+CMD openclaw gateway --auth token --port 10000 --bind lan

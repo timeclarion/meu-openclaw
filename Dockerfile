@@ -1,11 +1,13 @@
 FROM node:20-slim
 
-# Instala o OpenClaw globalmente
-RUN npm install -g openclaw
+WORKDIR /app
 
-# Define a porta
+# Instala o pacote localmente
+RUN npm install openclaw
+
+# Define as variáveis de ambiente necessárias
 ENV PORT=10000
+ENV NODE_ENV=production
 
-# Usa o caminho direto do executável do NPM para evitar erros de link
-# O 'npm bin -g' geralmente aponta para /usr/local/bin ou /usr/bin
-CMD ["/usr/local/bin/openclaw", "gateway", "--auth", "token", "--port", "10000", "--bind", "lan"]
+# Comando que ignora o binário do sistema e chama o código direto
+CMD ["node", "./node_modules/openclaw/dist/index.js", "gateway", "--auth", "token", "--port", "10000", "--bind", "lan"]

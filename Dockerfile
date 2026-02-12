@@ -1,13 +1,12 @@
 FROM node:20-slim
 
-# Definimos o diretório de trabalho
 WORKDIR /app
 
-# Instalamos localmente para evitar problemas de PATH global
+# Instala o pacote localmente
 RUN npm install openclaw
 
-# A porta que o Render exige
+# Garante que as variáveis de ambiente estejam disponíveis
 ENV PORT=10000
 
-# Usamos npx para garantir que ele localize o binário dentro de node_modules
-CMD ["npx", "openclaw", "gateway", "--auth", "token", "--port", "10000", "--bind", "lan"]
+# Usamos o npx especificando o pacote (-p) e chamando o binário 'openclaw'
+CMD ["npx", "-p", "openclaw", "openclaw", "gateway", "--auth", "token", "--port", "10000", "--bind", "lan"]
